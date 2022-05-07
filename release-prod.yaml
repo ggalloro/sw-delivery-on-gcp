@@ -1,0 +1,12 @@
+steps:
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  entrypoint: gcloud
+  args:
+    [
+      "deploy", "releases", "promote", "--delivery-pipeline",
+      "cd-on-gcp-pipeline", "--release", "rel-leeroy-ms", 
+      "--region", "europe-west1"
+    ]
+#options:
+#  pool:
+#    name: 'projects/galloro-demos/locations/europe-west1/workerPools/private-eu'

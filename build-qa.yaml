@@ -1,0 +1,30 @@
+steps:
+- name: gcr.io/k8s-skaffold/skaffold
+  args:
+    - skaffold
+    - build
+    - '--interactive=false'
+    - '--file-output=/workspace/artifacts.json'
+    - '--default-repo=europe-docker.pkg.dev/$PROJECT_ID/cloudbuilds'
+    - '--push=true'
+  id: skaffold-build
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  entrypoint: gcloud
+  args:
+    [
+      "deploy", "releases", "create", "rel-leeroy-ms",
+      "--delivery-pipeline", "cd-on-gcp-pipeline",
+      "--region", "europe-west1",
+      "--annotations", "commitId=${REVISION_ID}",
+      "--build-artifacts", "/workspace/artifacts.json"
+    ]
+  waitFor: ['skaffold-build']
+artifacts:
+  objects:
+    location: 'gs://multi-cloud-sw-delivery-artifacts/'
+    paths:
+    - '/workspace/artifacts.json'
+#options:
+#  pool:
+#    name: 'projects/galloro-demos/locations/europe-west1/workerPools/private-eu'
+
