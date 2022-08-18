@@ -4,9 +4,6 @@ steps:
   args:
     [
       "deploy", "releases", "promote", "--delivery-pipeline",
-      "cd-on-gcp-pipeline", "--release", "rel-leeroy-ms", 
-      "--region", "europe-west1"
+      "cd-on-gcp-pipeline", "--yourregion"
     ]
-#options:
-#  pool:
-#    name: 'projects/galloro-demos/locations/europe-west1/workerPools/private-eu'
+

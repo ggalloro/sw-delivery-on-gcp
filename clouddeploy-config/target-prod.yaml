@@ -19,10 +19,4 @@ metadata:
 description: Prod Cluster (GCP)
 requireApproval: true
 gke:
-  cluster: projects/galloro-demos/locations/europe-west1-b/clusters/prod-cluster
-#executionConfigs:
-#- privatePool:
-#    workerPool: projects/galloro-demos/locations/europe-west1/workerPools/private-eu
-#  usages:
-#  - RENDER
-#  - DEPLOY
+  cluster: projects/yourproject/locations/yourlocation/clusters/prodcluster

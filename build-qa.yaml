@@ -5,7 +5,7 @@ steps:
     - build
     - '--interactive=false'
     - '--file-output=/workspace/artifacts.json'
-    - '--default-repo=europe-docker.pkg.dev/$PROJECT_ID/cloudbuilds'
+    - '--default-repo=yourrepo'
     - '--push=true'
   id: skaffold-build
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
@@ -14,7 +14,7 @@ steps:
     [
       "deploy", "releases", "create", "rel-leeroy-ms",
       "--delivery-pipeline", "cd-on-gcp-pipeline",
-      "--region", "europe-west1",
+      "--region", "yourregion",
       "--annotations", "commitId=${REVISION_ID}",
       "--build-artifacts", "/workspace/artifacts.json"
     ]
@@ -24,7 +24,4 @@ artifacts:
     location: 'gs://multi-cloud-sw-delivery-artifacts/'
     paths:
     - '/workspace/artifacts.json'
-#options:
-#  pool:
-#    name: 'projects/galloro-demos/locations/europe-west1/workerPools/private-eu'
 
