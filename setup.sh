@@ -27,7 +27,7 @@ sed -i.bak "s/yourregion/$yourregion/g" release-prod.yaml
 ###
 echo "Enter the full path of your Artifact Registry repository:"
 read yourrepo
-sed -i.bak "s/yourrepo/$yourrepo/g" build-qa.yaml
+sed -i.bak "s,yourrepo,$yourrepo,g" build-qa.yaml
 ###
 rm -rf clouddeploy-config/target-prod.yaml.bak
 rm -rf clouddeploy-config/target-qa.yaml.bak

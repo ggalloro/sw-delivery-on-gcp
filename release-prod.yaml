@@ -3,7 +3,8 @@ steps:
   entrypoint: gcloud
   args:
     [
-      "deploy", "releases", "promote", "--delivery-pipeline",
-      "cd-on-gcp-pipeline", "--yourregion"
+       "deploy", "releases", "promote", "--delivery-pipeline",
+       "cd-on-gcp-pipeline", "--release", "rel-leeroy-ms", 
+       "--region", "yourregion"
     ]
 

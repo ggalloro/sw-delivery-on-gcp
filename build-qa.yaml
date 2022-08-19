@@ -19,9 +19,5 @@ steps:
       "--build-artifacts", "/workspace/artifacts.json"
     ]
   waitFor: ['skaffold-build']
-artifacts:
-  objects:
-    location: 'gs://multi-cloud-sw-delivery-artifacts/'
-    paths:
-    - '/workspace/artifacts.json'
+
 
