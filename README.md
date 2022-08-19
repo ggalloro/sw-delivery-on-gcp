@@ -24,8 +24,8 @@ Using these assets and following the instructions below you could experiment an 
 5. Create a Cloud Deploy [delivery pipeline](https://cloud.google.com/deploy/docs/deploying-application#creating_your_delivery_pipeline) using [the manifest provided](clouddeploy-config/delivery-pipeline.yaml). It will create a pipeline that has qa and prod as stages each using a profile with the same name.
 6. Create 2 Cloud Deploy targets mapping the above clusters to the pipeline stages using [this manifest for qa cluster](clouddeploy-config/target-qa.yaml) and [this one for prod cluster](clouddeploy-config/target-prod.yaml).
 7. [Create 2 Cloud Build triggers](https://cloud.google.com/build/docs/automating-builds/create-manage-triggers) linked to your fork of the Github repo:
-    1. The 1st trigger must be invoked by a pull request with Comment control enabled and use the build-qa.yaml(build-qa.yaml) build config
-    2. The 2nd trigger must be invoked by a push to the main branch and  should use the release-prod.yaml(release-prod.yaml) build config
+    1. The 1st trigger must be invoked by a pull request with Comment control enabled and use the [build-qa.yaml](build-qa.yaml) build config
+    2. The 2nd trigger must be invoked by a push to the main branch and  should use the [release-prod.yaml](release-prod.yaml) build config
 8. Create 1 additional Chrome profile (or use Chrome Incognito window), this will be used for the developer tasks, from this Chrome profile or window:
     1. Log in to the additional Github account
     2. Create another fork of the repo (this will be the developer fork in the flow) from the one forked by the main account
