@@ -4,7 +4,7 @@ This repo contains some example assets to evaluate how to use Google [Cloud Code
 
 Using these assets and following the instructions below you could experiment an example flow where:
 1. A developer forks the application repo in his Github account
-2. The developer make a change to the code using [Cloud Shell Editor and Cloud Code](https://cloud.google.com/code/docs/shell), the change is immediately deployed in his dev cluster running in minikube in the Cloud Shell
+2. The developer makes a change to the code using [Cloud Shell Editor and Cloud Code](https://cloud.google.com/code/docs/shell), the change is immediately deployed in his dev cluster running in minikube in the Cloud Shell
 3. When he is happy with the change he opens a pull request to the main repo
 4. QA team makes a specific comment to the PR and this automatically executes a Cloud Build trigger that build a container with Skaffold, create a relese on Cloud Deploy and rolls it out in a QA GKE cluster where usability tests can be run
 5. After the QA team is happy the PR is merged and this runs another trigger that promote the release to a Prod GKE Cluster. The Cloud Deploy prod target requires approval so an approval request is triggered, the App Release team verify the rollout and approves it so the app is released in prduction
