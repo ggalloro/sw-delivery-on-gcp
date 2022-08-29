@@ -146,4 +146,4 @@ service/leeroy-app   LoadBalancer   10.4.15.58   35.240.121.132   80:30981/TCP  
 24. After the build completes you will see an approval request in the Cloud Deploy pipeline
 25. Click on Review and then approve the request
 26. With kubectl, using the context of the Prod GKE cluster, view the Pods and services created
-27. Get the external ip address for the **leeroy-app** Service get to the address with your broswer, you should see the app deployed in QA
+27. Get the external ip address for the **leeroy-app** Service get to the address with your broswer, you should see the app deployed in Prod
