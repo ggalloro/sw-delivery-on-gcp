@@ -22,11 +22,11 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "leeroooooy app running in target: %s!!\n", os.Getenv("TARGET"))
+	fmt.Fprintf(w, "cd-on-gcp app running in target: %s!!\n", os.Getenv("TARGET"))
 }
 
 func main() {
-	log.Printf("leeroy app server ready, runnning in target: %s", os.Getenv("TARGET"))
+	log.Printf("cd-on-gcp app server ready, runnning in target: %s", os.Getenv("TARGET"))
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":8081", nil)
 }

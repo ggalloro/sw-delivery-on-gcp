@@ -16,20 +16,20 @@ apiVersion: skaffold/v2beta26
 kind: Config
 build:
   artifacts:
-    - image: leeroy-app
-      context: leeroy-app
+    - image: cdongcp-app
+      context: cdongcp-app
 deploy:
   kustomize:
     paths:
-      - leeroy-app/kubernetes/dev
+      - cdongcp-app/kubernetes/dev
 profiles:
 - name: qa
   deploy:
     kustomize:
       paths:
-        - leeroy-app/kubernetes/qa
+        - cdongcp-app/kubernetes/qa
 - name: prod
   deploy:
     kustomize:
       paths:
-        - leeroy-app/kubernetes/prod
+        - cdongcp-app/kubernetes/prod

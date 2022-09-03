@@ -12,7 +12,7 @@ steps:
   entrypoint: gcloud
   args:
     [
-      "deploy", "releases", "create", "rel-leeroy-ms",
+      "deploy", "releases", "create", "rel-cdongcp-ms",
       "--delivery-pipeline", "cd-on-gcp-pipeline",
       "--region", "yourregion",
       "--annotations", "commitId=${REVISION_ID}",

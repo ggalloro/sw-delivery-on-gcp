@@ -44,7 +44,7 @@ Using these assets and following the instructions below you could experiment an 
 2. If asked, click **AUTHORIZE** on the Authorize Cloud Shell prompt
 3. Click on the Cloud Code status bar (in the lower left corner) and then select **Run on Kubernetes**
 4. When asked for the Skaffold profile choose **[default]**
-5. In the Output pane you see that the build start for the leeroy-app application image
+5. In the Output pane you see that the build start for the cdongcp-app application image
 6. When deployment is complete Skaffold/Cloud Code will print the exposed url where the services have been forwarded, click the link and then **Open web preview**
 
 
@@ -64,13 +64,13 @@ Using these assets and following the instructions below you could experiment an 
 
 
 
-8. Now, let’s try to update the application to see the change implemented immediately in the deployment on the cluster, open the **app.go** file in **leeroy-app folder** in **Cloud Shell Editor**
-9. Change the message in row 25 to “`leeroooooy app updated in target: …`”, you should see the build and deployment process starting immediately
+8. Now, let’s try to update the application to see the change implemented immediately in the deployment on the cluster, open the **app.go** file in **cdongcp-app folder** in **Cloud Shell Editor**
+9. Change the message in row 25 to “`cd-on-gcp app updated in target: …`”, you should see the build and deployment process starting immediately
 10. At the end of the deploy click again on the forwarded url or refresh the browser window with the application to see your change deployed
 11. After the developer is happy with the change he wants to commit so, execute:
 
     ```
-    git add leeroy-app/app.go
+    git add cdongcp-app/app.go
     git commit -m "new feature"
     git push
     ```
@@ -120,17 +120,17 @@ Using these assets and following the instructions below you could experiment an 
 ```
 ➜  ~ kubectl --context=qa-cluster get pod,svc
 NAME                              READY   STATUS    RESTARTS   AGE
-pod/leeroy-app-5c9c5dd4c7-fmnvp   1/1     Running   0          42m
+pod/cdongcp-app-5c9c5dd4c7-fmnvp   1/1     Running   0          42m
 
 NAME                 TYPE           CLUSTER-IP   EXTERNAL-IP      PORT(S)        AGE
 service/kubernetes   ClusterIP      10.4.0.1     <none>           443/TCP        30d
-service/leeroy-app   LoadBalancer   10.4.15.58   35.240.121.132   80:30981/TCP   42m
+service/cdongcp-app   LoadBalancer   10.4.15.58   35.240.121.132   80:30981/TCP   42m
 
 ```
 
 
 
-21. Get the external ip address for the **leeroy-app** Service get to the address with your broswer, you should see the app deployed in QA
+21. Get the external ip address for the **cdongcp-app** Service get to the address with your broswer, you should see the app deployed in QA
 
 
 
@@ -146,4 +146,4 @@ service/leeroy-app   LoadBalancer   10.4.15.58   35.240.121.132   80:30981/TCP  
 24. After the build completes you will see an approval request in the Cloud Deploy pipeline
 25. Click on Review and then approve the request
 26. With kubectl, using the context of the Prod GKE cluster, view the Pods and services created
-27. Get the external ip address for the **leeroy-app** Service get to the address with your broswer, you should see the app deployed in Prod
+27. Get the external ip address for the **cdongcp-app** Service get to the address with your broswer, you should see the app deployed in Prod

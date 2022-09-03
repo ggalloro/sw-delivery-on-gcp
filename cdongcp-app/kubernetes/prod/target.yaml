@@ -15,12 +15,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: leeroy-app
+  name: cdongcp-app
 spec:
+  replicas: 3
   template:
     spec:
       containers:
-        - name: leeroy-app
+        - name: cdongcp-app
           env:
             - name: TARGET
-              value: qa
+              value: prod

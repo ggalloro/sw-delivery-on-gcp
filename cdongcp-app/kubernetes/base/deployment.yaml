@@ -12,15 +12,39 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+apiVersion: v1
+kind: Service
+metadata:
+  name: cdongcp-app
+  labels:
+    app: cdongcp-app
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8081
+  selector:
+    app: cdongcp-app
+  type: LoadBalancer
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: leeroy-app
+  name: cdongcp-app
+  labels:
+    app: cdongcp-app
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cdongcp-app
   template:
+    metadata:
+      labels:
+        app: cdongcp-app
     spec:
       containers:
-        - name: leeroy-app
-          env:
-            - name: TARGET
-              value: dev
+      - name: cdongcp-app
+        image: cdongcp-app
+        ports:
+        - containerPort: 8081
