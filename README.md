@@ -156,7 +156,7 @@ service/cdongcp-app   LoadBalancer   10.4.15.58   35.240.121.132   80:30981/TCP 
 
 ![alt_text](images/image9.png "Approval Request")
 
-26. Click on the Approval button
+26. Click on the **Approve** button
 
 ![alt_text](images/image10.png "Approve")
 
