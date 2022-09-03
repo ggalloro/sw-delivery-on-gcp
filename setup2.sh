@@ -30,3 +30,5 @@ sed -i "s/yourregion/$yourregion/g" release-prod.yaml
 echo "Enter the full path of your Artifact Registry repository:"
 read yourrepo
 sed -i "s,yourrepo,$yourrepo,g" build-qa.yaml
+###
+echo "Configuration succesfully updated"

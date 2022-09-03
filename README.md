@@ -50,7 +50,7 @@ Using these assets and following the instructions below you could experiment an 
 
 
 
-![alt_text](images/image1.png "image_tooltip")
+![alt_text](images/image1.png "Skaffold Dev Output")
 
 
 
@@ -59,14 +59,16 @@ Using these assets and following the instructions below you could experiment an 
 
 
 
-![alt_text](images/image2.png "image_tooltip")
-
+![alt_text](images/image2.png "App Deployed")
 
 
 
 8. Now, let’s try to update the application to see the change implemented immediately in the deployment on the cluster, open the **app.go** file in **cdongcp-app folder** in **Cloud Shell Editor**
-9. Change the message in row 25 to “`cd-on-gcp app updated in target: …`”, you should see the build and deployment process starting immediately
+9. Change the message in row 25 to “`cd-on-gcp app **updated** in target: …`”, you should see the build and deployment process starting immediately
 10. At the end of the deploy click again on the forwarded url or refresh the browser window with the application to see your change deployed
+
+![alt_text](images/image2b.png "App updated")
+
 11. After the developer is happy with the change he wants to commit so, execute:
 
     ```
