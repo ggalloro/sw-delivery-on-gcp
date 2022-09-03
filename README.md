@@ -64,7 +64,7 @@ Using these assets and following the instructions below you could experiment an 
 
 
 8. Now, let’s try to update the application to see the change implemented immediately in the deployment on the cluster, open the **app.go** file in **cdongcp-app folder** in **Cloud Shell Editor**
-9. Change the message in row 25 to “`cd-on-gcp app **updated** in target: …`”, you should see the build and deployment process starting immediately
+9. Change the message in row 25 to “`cd-on-gcp app updated in target: …`”, you should see the build and deployment process starting immediately
 10. At the end of the deploy click again on the forwarded url or refresh the browser window with the application to see your change deployed
 
 ![alt_text](images/image2b.png "App updated")
@@ -99,7 +99,7 @@ Using these assets and following the instructions below you could experiment an 
 
 
 
-![alt_text](images/image4.png "image_tooltip")
+![alt_text](images/image4.png "Cloud build Trigger Logs")
 
 
 
@@ -110,7 +110,7 @@ Using these assets and following the instructions below you could experiment an 
 
 
 
-![alt_text](images/image5.png "image_tooltip")
+![alt_text](images/image5.png "Cloud Deploy Release")
 
 
 
@@ -138,14 +138,47 @@ service/cdongcp-app   LoadBalancer   10.4.15.58   35.240.121.132   80:30981/TCP 
 
 
 
-![alt_text](images/image6.png "image_tooltip")
+![alt_text](images/image6.png "App updated in QA")
 
 
 
 
 22. Let’s pretend that the QA team performs some usability test now, when they are happy, go back to the Github page from your main account and merge the PR
-23. This will trigger the execution of the trigger linked to the [release-prod.yaml](release-prod.yaml) build, if you go back to Cloud Build history you should see a new build running
+23. This will cause the execution of the trigger linked to the [release-prod.yaml](release-prod.yaml) build, promoting the previously created release to the prod environment. If you go back to Cloud Build history you should see a new build running
+
+![alt_text](images/image7.png "Release Prod Trigger Log")
+
 24. After the build completes you will see an approval request in the Cloud Deploy pipeline
-25. Click on Review and then approve the request
-26. With kubectl, using the context of the Prod GKE cluster, view the Pods and services created
-27. Get the external ip address for the **cdongcp-app** Service get to the address with your broswer, you should see the app deployed in Prod
+
+![alt_text](images/image8.png "Approval Request")
+
+25. Click on Review, you will see a rollout that Needs approval, click on Review again 
+
+![alt_text](images/image9.png "Approval Request")
+
+26. Click on the Approval button
+
+![alt_text](images/image10.png "Approve")
+
+27. If you go back to the Delivery Pipeline visualization in Cloud Deploy you will see the rollout deployed in prod.
+
+![alt_text](images/image11.png "Rollout in Prod")
+
+28. With kubectl, using the context of the Prod GKE cluster, view the Pods and services created, you will notice that in prod the deployment has 3 replicas since the Skaffold profile for prod apply this configuration made with kustomize in the [prod/target.yaml](cdongcp-app/kubernetes/prod/target.yaml) manifest.
+
+```
+cd-on-gcp git:(main) kubectl --context=prod-cluster get pod,svc
+NAME                               READY   STATUS    RESTARTS   AGE
+pod/cdongcp-app-6d59f89c6b-g697n   1/1     Running   0          5m10s
+pod/cdongcp-app-6d59f89c6b-jqzkd   1/1     Running   0          5m10s
+pod/cdongcp-app-6d59f89c6b-ms6v7   1/1     Running   0          5m10s
+
+NAME                  TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)        AGE
+service/cdongcp-app   LoadBalancer   10.52.11.35   35.240.3.156   80:31347/TCP   5m12s
+service/kubernetes    ClusterIP      10.52.0.1     <none>         443/TCP        45d
+
+```
+
+29. Get the external ip address for the **cdongcp-app** Service get to the address with your broswer, you should see the app deployed in Prod
+
+![alt_text](images/image12.png "App frontpage in Prod")
