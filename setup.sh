@@ -34,4 +34,4 @@ rm -rf clouddeploy-config/target-qa.yaml.bak
 rm -rf build-qa.yaml.bak
 rm -rf release-prod.yaml.bak
 ###
-echo "Configuration succesfully updated"
+echo "Configuration successfully updated"
