@@ -31,4 +31,4 @@ echo "Enter the full path of your Artifact Registry repository:"
 read yourrepo
 sed -i "s,yourrepo,$yourrepo,g" build-qa.yaml
 ###
-echo "Configuration succesfully updated"
+echo "Configuration successfully updated"
