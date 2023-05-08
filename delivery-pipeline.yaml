@@ -18,13 +18,24 @@ metadata:
   name: cd-on-gcp-pipeline
 description: delivery pipeline for CD on GCP demo with Skaffold profiles
 serialPipeline:
- stages:
- - targetId: qa
-   profiles:
-   - qa
- - targetId: prod
-   profiles:
-   - prod
+  stages:
+  - targetId: qa
+    profiles:
+    - qa
+  - targetId: prod
+    profiles:
+    - prod
+    strategy:
+      canary:
+        runtimeConfig:
+          kubernetes:
+            gatewayServiceMesh:
+              httpRoute: "cdongcp-route"
+              service: "cdongcp-app"
+              deployment: "cdongcp-app"
+        canaryDeployment:
+          percentages: [50]
+          verify: false
 ---
 apiVersion: deploy.cloud.google.com/v1
 kind: Target
