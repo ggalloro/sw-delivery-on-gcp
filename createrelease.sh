@@ -10,4 +10,4 @@ echo
 gcloud deploy releases create first-release --delivery-pipeline cd-on-gcp-pipeline \
 --region yourregion --build-artifacts artifacts.json
 ###
-echo "Release creation completed"
+echo "Release creation completed, please promote and approve your release manually""
