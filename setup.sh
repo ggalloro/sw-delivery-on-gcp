@@ -32,5 +32,6 @@ sed -i.bak "s,yourrepo,$yourrepo,g" createrelease.sh
 rm -rf delivery-pipeline.yaml.bak
 rm -rf build-qa.yaml.bak
 rm -rf release-prod.yaml.bak
+rm -rf createrelease.sh.bak
 ###
 echo "Configuration successfully updated"
