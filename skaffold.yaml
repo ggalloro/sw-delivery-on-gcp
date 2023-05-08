@@ -12,24 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: skaffold/v2beta26
+apiVersion: skaffold/v4beta4
 kind: Config
 build:
   artifacts:
     - image: cdongcp-app
       context: cdongcp-app
-deploy:
+manifests:
   kustomize:
     paths:
       - cdongcp-app/kubernetes/dev
 profiles:
 - name: qa
-  deploy:
+  manifests:
     kustomize:
       paths:
         - cdongcp-app/kubernetes/qa
 - name: prod
-  deploy:
+  manifests:
     kustomize:
       paths:
         - cdongcp-app/kubernetes/prod
