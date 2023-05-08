@@ -33,7 +33,7 @@ metadata:
 description: Prod Cluster (GCP)
 requireApproval: true
 gke:
-  cluster: projects/galloro-demos/locations/europe-west1-b/clusters/prod-cluster
+  cluster: projects/yourproject/locations/yourlocation/clusters/prodcluster
 ---
 apiVersion: deploy.cloud.google.com/v1beta1
 kind: Target
@@ -41,4 +41,4 @@ metadata:
   name: qa
 description: QA Cluster (GCP)
 gke:
-  cluster: projects/galloro-demos/locations/europe-west1-b/clusters/qa-cluster
+  cluster: projects/yourproject/locations/yourlocation/clusters/qacluster
