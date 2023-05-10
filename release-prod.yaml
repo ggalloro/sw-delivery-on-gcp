@@ -4,7 +4,7 @@ steps:
   args:
     [
        "deploy", "releases", "promote", "--delivery-pipeline",
-       "cd-on-gcp-pipeline", "--release", "cdongcp-rel-$SHORT_SHA", 
+       "cd-on-gcp-pipeline", "--release", "cdongcp-rel", 
        "--region", "yourregion"
     ]
 
