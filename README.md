@@ -1,13 +1,14 @@
-# Continuous Delivery on GCP Tutorial - Update in Progress
+# Continuous Delivery on GCP Tutorial
 
-This repo contains some example assets to evaluate how to use Google [Cloud Code](https://cloud.google.com/code/docs/shell), [Cloud Build](https://cloud.google.com/build/docs/overview), [Google Cloud Deploy](https://cloud.google.com/deploy/docs/overview) and [Skaffold](https://skaffold.dev/) to automate software delivery and promote releases through multiple stages on GCP.
+This repo contains some example assets to evaluate how to use Google [Cloud Code](https://cloud.google.com/code/docs/shell), [Cloud Build](https://cloud.google.com/build/docs/overview), [Cloud Deploy](https://cloud.google.com/deploy/docs/overview) and [Skaffold](https://skaffold.dev/) to automate software delivery and promote releases through multiple stages on GCP.
 
 Using these assets and following the instructions below you could experiment an example flow where:
 1. A developer forks the application repo in his Github account
 2. The developer makes a change to the code using [Cloud Shell Editor and Cloud Code](https://cloud.google.com/code/docs/shell), the change is immediately deployed in his dev cluster running in minikube in the Cloud Shell
 3. When he is happy with the change he opens a pull request to the main repo
 4. QA team makes a specific comment to the PR and this automatically executes a Cloud Build trigger that builds a container with Skaffold, creates a relese on Cloud Deploy and rolls it out in a QA GKE cluster where usability tests can be run
-5. After the QA team is happy, the PR is merged and this runs another trigger that promotes the release to a Prod GKE Cluster. The Cloud Deploy prod target requires approval so an approval request is triggered, the App Release team checks the rollout and approves it so the app is released in production
+5. After the QA team is happy, the PR is merged and this runs another trigger that promotes the release to a Prod GKE Cluster. The Cloud Deploy prod target requires approval so an approval request is triggered, the App Release team checks the rollout and approves it so the app is released in production with a canary release at 50%
+6. After checking the canary release the App Release team advances the rollout to 100%
 
 ## What you need
 * A GCP project with GKE, Cloud Build, Cloud Deploy, Artifact Registry APIs enabled
@@ -17,15 +18,23 @@ Using these assets and following the instructions below you could experiment an 
 
 ## Preparation
 
-1. Create 2 GKE Clusters: one for the QA environment and the other for the prod environment, both in the same location (zone or region).
-2. Create an [Artifact Registry](https://cloud.google.com/artifact-registry) Repository to store your images
-3. Fork this repo to your Github account and clone locally, this will be used as the application repo for the tutorial
-4. Run [setup.sh](setup.sh) from the local repo clone and follow prompt to insert your GCP project, cluster names and location, Artifact Registry repository, Cloud Deploy delivery pipeline region. Then commit and push to your fork.
-5. Create a Cloud Deploy [delivery pipeline](https://cloud.google.com/deploy/docs/deploying-application#creating_your_delivery_pipeline) using [the manifest provided](delivery-pipeline.yaml). It will create a pipeline that has qa and prod as stages each using a profile with the same name and 2 targets mapping the above clusters to the pipeline stages.
-6. [Create 2 Cloud Build triggers](https://cloud.google.com/build/docs/automating-builds/create-manage-triggers) linked to your fork of the Github repo:
+1. Create [2 GKE Clusters with Anthos Service Mesh enabled](https://cloud.google.com/service-mesh/docs/managed/install-anthos-service-mesh-console): one for the QA environment and the other for the prod environment, both in the same location (zone or region).
+2. Apply K8s Gateway API CRDs to both clusters:
+```
+kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
+  { kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=v0.6.1" | kubectl apply -f -; }
+```
+3. Create an [Artifact Registry](https://cloud.google.com/artifact-registry) Repository to store your images
+4. Fork this repo to your Github account and clone locally, this will be used as the application repo for the tutorial
+5. Run [setup.sh](setup.sh) from the local repo clone and follow prompt to insert your GCP project, cluster names and location, Artifact Registry repository, Cloud Deploy delivery pipeline region. Then commit and push to your fork.
+6. Apply [gateway.yaml](gateway.yaml) to both clusters to create a Gateway resource using the Istio Ingress Class
+7. Create a Cloud Deploy [delivery pipeline](https://cloud.google.com/deploy/docs/deploying-application#creating_your_delivery_pipeline) using [the manifest provided](delivery-pipeline.yaml). It will create a pipeline that has qa and prod as stages each using a profile with the same name and 2 targets mapping the above clusters to the pipeline stages.
+7. Run [createrelease.sh](createrelease.sh) to build your image and create your 1st Cloud Deploy release
+8. [Promote your first release to stable phase in prod stage in Cloud Deploy from GCP Console, approve the promotion if needed](https://cloud.google.com/deploy/docs/promote-release#console)
+9. [Create 2 Cloud Build triggers](https://cloud.google.com/build/docs/automating-builds/create-manage-triggers) linked to your fork of the Github repo:
     1. The 1st trigger must be invoked by a pull request with Comment control enabled and use the [build-qa.yaml](build-qa.yaml) build config
     2. The 2nd trigger must be invoked by a push to the main branch and  should use the [release-prod.yaml](release-prod.yaml) build config
-7. Create 1 additional Chrome profile (or use Chrome Incognito window), this will be used for the developer tasks, from this Chrome profile or window:
+10. Create 1 additional Chrome profile (or use Chrome Incognito window), this will be used for the developer tasks, from this Chrome profile or window:
     1. Log in to the additional Github account
     2. Create another fork of the repo (this will be the developer fork in the flow) from the one forked by the main account
     3. Log in to Google Cloud Shell
