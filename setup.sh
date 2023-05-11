@@ -22,13 +22,16 @@ echo "Enter the name of your GCP region (the one you will create the delivery pi
 read yourregion
 sed -i.bak "s/yourregion/$yourregion/g" build-qa.yaml
 sed -i.bak "s/yourregion/$yourregion/g" release-prod.yaml
+sed -i.bak "s/yourregion/$yourregion/g" createrelease.sh
 ###
 echo "Enter the full path of your Artifact Registry repository:"
 read yourrepo
 sed -i.bak "s,yourrepo,$yourrepo,g" build-qa.yaml
+sed -i.bak "s,yourrepo,$yourrepo,g" createrelease.sh
 ###
 rm -rf delivery-pipeline.yaml.bak
 rm -rf build-qa.yaml.bak
 rm -rf release-prod.yaml.bak
+rm -rf createrelease.sh.bak
 ###
 echo "Configuration successfully updated"

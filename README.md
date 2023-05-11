@@ -1,4 +1,4 @@
-# Continuous Delivery on GCP Tutorial
+# Continuous Delivery on GCP Tutorial - Update in Progress
 
 This repo contains some example assets to evaluate how to use Google [Cloud Code](https://cloud.google.com/code/docs/shell), [Cloud Build](https://cloud.google.com/build/docs/overview), [Google Cloud Deploy](https://cloud.google.com/deploy/docs/overview) and [Skaffold](https://skaffold.dev/) to automate software delivery and promote releases through multiple stages on GCP.
 
