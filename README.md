@@ -116,11 +116,11 @@ kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
 
 ![alt_text](images/image7.png "Release Prod Trigger Log")
 
-24. After the build completes you will see your applciation deployed to the canary phase in the Cloud Deploy pipeline
+24. After the build completes you will see your application deployed to the canary phase in the Cloud Deploy pipeline
 
 ![alt_text](images/image16.png "Deploy to Canary")
 
-25. Get the Gateway resource IP of your prod cluster and execute the following command from a terminal (replace x.x.x.x with your gateway IP address): `"while true;do curl x.x.x.x;done"`, you should see responses both from the old and new (canary) version since your canary strategy has been set at 50% in the delivery pipelin, keep the curl command running.
+25. Get the Gateway resource IP of your prod cluster and execute the following command from a terminal (replace x.x.x.x with your gateway IP address): `"while true;do curl x.x.x.x;done"`, you should see responses both from the old and new (canary) version since your canary strategy has been set at 50% in the delivery pipeline, keep the curl command running.
 
 ![alt_text](images/image17.png "Canary release")
 
@@ -130,6 +130,6 @@ kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
 
 ![alt_text](images/image11.png "Rollout in Prod")
 
-28. If you open with a browser the IP of your Gateway in the prod cluster browser, you will see the updated version of your application deployed in prod environemnt:
+28. If you get with a browser to the IP of your Gateway in the prod cluster, you will see the updated version of your application deployed in the prod environemnt:
 
 ![alt_text](images/image12.png "App frontpage in Prod")
