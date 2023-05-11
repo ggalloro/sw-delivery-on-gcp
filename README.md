@@ -48,28 +48,30 @@ kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
 
 
 
-1. From the developer Cloud shell editor launch minikube (in the lower blue Cloud Code bar click **minikube** and choose minikube in the upper window that should be the only option, and then **Start**)
-2. If asked, click **AUTHORIZE** on the Authorize Cloud Shell prompt
-3. Click on the Cloud Code status bar (in the lower left corner) and then select **Run on Kubernetes**
-4. When asked for the Skaffold profile choose **[default]**
-5. In the Output pane you see that the build start for the cdongcp-app application image
-6. When deployment is complete Skaffold/Cloud Code will print the exposed url where the services have been forwarded, click the link and then **Open web preview**
+1. Open Cloud Deploy in GCP console and explore/show the cd-on-gcp-pipeline delivery pipeline: a release named first-release has been rolled out to qa and prod stages
 
+![alt_text](images/image13.png "cd-on-gcp-pipeline with first-release")
 
+2. Explore the targets, click on the prod-cluster link under 'Deployment Targets', the production GKE cluster GCP console page will open
 
+![alt_text](images/image14.png "Cloud Deploy targets")
+
+3. Get the Gateway resource IP of your prod cluster with `kubectl get gtw`, put it into a browser, you will see that your application is deployed in production:
+
+![alt_text](images/image15.png "App page")
+
+4. From the developer Cloud shell editor in the developer Chrome window launch minikube (in the lower blue Cloud Code bar click **minikube** and choose minikube in the upper window that should be the only option, and then **Start**)
+5. If asked, click **AUTHORIZE** on the Authorize Cloud Shell prompt
+6. Click on the Cloud Code status bar (in the lower left corner) and then select **Run on Kubernetes**
+7. When asked for the Skaffold profile choose **[default]**
+8. In the Output pane you see that the build start for the cdongcp-app application image
+9. When deployment is complete Skaffold/Cloud Code will print the exposed url where the services have been forwarded, click the link and then **Open web preview**
 
 ![alt_text](images/image1.png "Skaffold Dev Output")
 
-
-
-
 7. You see the app frontpage displaying this message:
 
-
-
 ![alt_text](images/image2.png "App Deployed")
-
-
 
 8. Now, let’s try to update the application to see the change implemented immediately in the deployment on the cluster, open the **app.go** file in **cdongcp-app folder** in **Cloud Shell Editor**
 9. Change the message in row 25 to “`cd-on-gcp app updated in target: …`”, you should see the build and deployment process starting immediately
@@ -85,18 +87,11 @@ kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
     git push
     ```
 
-
 12. Go on the developer github page containing the repository and create a pull request 
 13. You will see that some check fails because the Cloud Build Trigger require a comment from the central repo owner (QA team)
 14. From the main browser window (the one with your main account logged), go to the repository on Github, click on the **new-feature** PR, examine code changes, you ar acting as the QA team at the moment
 
-
-
-
 ![alt_text](images/image3.png "image_tooltip")
-
-
-
 
 15. In the conversation, write `/gcbrun` in a new comment, this will make the Cloud Build Trigger configured in [build-qa.yaml](build-qa.yaml) run, you will see checks running on Github. As you can see from the build config file, this build will:
     1. Build a container image with your updated code using `skaffold build`
@@ -104,89 +99,37 @@ kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
     3. Create a Cloud Deploy Release (this will automatically roll out the release in the 1st stage of the pipeline that is the QA Cluster)
 16. Go to Cloud Build History, you will see a build running, click on it, you will see the logs 
 
-
-
-
 ![alt_text](images/image4.png "Cloud build Trigger Logs")
-
-
-
 
 17. After the build completes you should be able to see your container image uploaded to your Artifact Registry repository, the image tag will be the repository commit id
 18. From the GCP Console, go to Cloud Deploy, you should see your rollout completed (or in progress) to the QA stage of the pipeline
 
-
-
-
 ![alt_text](images/image5.png "Cloud Deploy Release")
 
 
-
-
-19. With kubectl, using the context of the QA GKE cluster, view the Pods and services created, as in the following command
-20. 
-
-
-```
-➜  ~ kubectl --context=qa-cluster get pod,svc
-NAME                              READY   STATUS    RESTARTS   AGE
-pod/cdongcp-app-5c9c5dd4c7-fmnvp   1/1     Running   0          42m
-
-NAME                 TYPE           CLUSTER-IP   EXTERNAL-IP      PORT(S)        AGE
-service/kubernetes   ClusterIP      10.4.0.1     <none>           443/TCP        30d
-service/cdongcp-app   LoadBalancer   10.4.15.58   35.240.121.132   80:30981/TCP   42m
-
-```
-
-
-
-21. Get the external ip address for the **cdongcp-app** Service get to the address with your broswer, you should see the app deployed in QA
-
-
-
-
+19. Get the Gateway resource IP of your QA cluster with `kubectl get gtw`, put it into a browser, you will see the updated version of your application deployed in QA environemnt:
 
 ![alt_text](images/image6.png "App updated in QA")
-
-
-
 
 22. Let’s pretend that the QA team performs some usability test now, when they are happy, go back to the Github page from your main account and merge the PR
 23. This will cause the execution of the trigger linked to the [release-prod.yaml](release-prod.yaml) build, promoting the previously created release to the prod environment. If you go back to Cloud Build history you should see a new build running
 
 ![alt_text](images/image7.png "Release Prod Trigger Log")
 
-24. After the build completes you will see an approval request in the Cloud Deploy pipeline
+24. After the build completes you will see your applciation deployed to the canary phase in the Cloud Deploy pipeline
 
-![alt_text](images/image8.png "Approval Request")
+![alt_text](images/image16.png "Deploy to Canary")
 
-25. Click on Review, you will see a rollout that Needs approval, click on Review again 
+25. Get the Gateway resource IP of your prod cluster and execute the following command from a terminal (replace x.x.x.x with your gateway IP address): `"while true;do curl x.x.x.x;done"`, you should see responses both from the old and new (canary) version since your canary strategy has been set at 50% in the delivery pipelin, keep the curl command running.
 
-![alt_text](images/image9.png "Approval Request")
+![alt_text](images/image17.png "Canary release")
 
-26. Click on the **Approve** button
-
-![alt_text](images/image10.png "Approve")
+26. Click on Advance to stable, then click Advance, your rollout will advance to the stable phase and your application will be completely replaced with the updated version as you can see from the curl responses.
 
 27. If you go back to the Delivery Pipeline visualization in Cloud Deploy you will see the rollout deployed in prod.
 
 ![alt_text](images/image11.png "Rollout in Prod")
 
-28. With kubectl, using the context of the Prod GKE cluster, view the Pods and services created, you will notice that in prod the deployment has 3 replicas since the Skaffold profile for prod apply this configuration made with kustomize in the [prod/target.yaml](cdongcp-app/kubernetes/prod/target.yaml) manifest.
-
-```
-cd-on-gcp git:(main) kubectl --context=prod-cluster get pod,svc
-NAME                               READY   STATUS    RESTARTS   AGE
-pod/cdongcp-app-6d59f89c6b-g697n   1/1     Running   0          5m10s
-pod/cdongcp-app-6d59f89c6b-jqzkd   1/1     Running   0          5m10s
-pod/cdongcp-app-6d59f89c6b-ms6v7   1/1     Running   0          5m10s
-
-NAME                  TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)        AGE
-service/cdongcp-app   LoadBalancer   10.52.11.35   35.240.3.156   80:31347/TCP   5m12s
-service/kubernetes    ClusterIP      10.52.0.1     <none>         443/TCP        45d
-
-```
-
-29. Get the external ip address for the **cdongcp-app** Service get to the address with your broswer, you should see the app deployed in Prod
+28. If you open with a browser the IP of your Gateway in the prod cluster browser, you will see the updated version of your application deployed in prod environemnt:
 
 ![alt_text](images/image12.png "App frontpage in Prod")
