@@ -116,20 +116,32 @@ kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
 
 ![alt_text](images/image7.png "Release Prod Trigger Log")
 
-24. After the build completes you will see your application deployed to the canary phase in the Cloud Deploy pipeline
+24. After the build completes you will see an approval request in the Cloud Deploy pipeline
+
+![alt_text](images/image8.png "Approval Request")
+
+25. Click on Review, you will see a rollout that Needs approval, click on Review again
+
+![alt_text](images/image9.png "Approval Request")
+
+26. Click on the Approve button
+
+![alt_text](images/image10.png "Approve")
+
+27. If you go back to the Delivery Pipeline visualization in Cloud Deploy you will see the rollout deployed to canary phase
 
 ![alt_text](images/image16.png "Deploy to Canary")
 
-25. Get the Gateway resource IP of your prod cluster and execute the following command from a terminal (replace x.x.x.x with your gateway IP address): `"while true;do curl x.x.x.x;done"`, you should see responses both from the old and new (canary) version since your canary strategy has been set at 50% in the delivery pipeline, keep the curl command running.
+28. Get the Gateway resource IP of your prod cluster and execute the following command from a terminal (replace x.x.x.x with your gateway IP address): `"while true;do curl x.x.x.x;done"`, you should see responses both from the old and new (canary) version since your canary strategy has been set at 50% in the delivery pipeline, keep the curl command running.
 
 ![alt_text](images/image17.png "Canary release")
 
-26. Click on Advance to stable, then click Advance, your rollout will advance to the stable phase and your application will be completely replaced with the updated version as you can see from the curl responses.
+29. Click on Advance to stable, then click Advance, your rollout will advance to the stable phase and your application will be completely replaced with the updated version as you can see from the curl responses.
 
-27. If you go back to the Delivery Pipeline visualization in Cloud Deploy you will see the rollout deployed in prod.
+30. If you go back to the Delivery Pipeline visualization in Cloud Deploy you will see the rollout deployed in prod.
 
 ![alt_text](images/image11.png "Rollout in Prod")
 
-28. If you get with a browser to the IP of your Gateway in the prod cluster, you will see the updated version of your application deployed in the prod environemnt:
+31. If you get with a browser to the IP of your Gateway in the prod cluster, you will see the updated version of your application deployed in the prod environemnt:
 
 ![alt_text](images/image12.png "App frontpage in Prod")
