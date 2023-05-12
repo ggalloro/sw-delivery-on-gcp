@@ -6,7 +6,7 @@ Using these assets and following the instructions below you could experiment an 
 1. A developer forks the application repo in his Github account
 2. The developer makes a change to the code using [Cloud Shell Editor and Cloud Code](https://cloud.google.com/code/docs/shell), the change is immediately deployed in his dev cluster running in minikube in the Cloud Shell
 3. When he is happy with the change he opens a pull request to the main repo
-4. QA team makes a specific comment to the PR and this automatically executes a Cloud Build trigger that builds a container with Skaffold, creates a relese on Cloud Deploy and rolls it out in a QA GKE cluster where usability tests can be run
+4. QA team makes a specific comment to the PR and this automatically executes a Cloud Build trigger that builds a container with Skaffold, creates a release on Cloud Deploy and rolls it out in a QA GKE cluster where usability tests can be run
 5. After the QA team is happy, the PR is merged and this runs another trigger that promotes the release to a Prod GKE Cluster. The Cloud Deploy prod target requires approval so an approval request is triggered, the App Release team checks the rollout and approves it so the app is released in production with a canary release at 50%
 6. After checking the canary release the App Release team advances the rollout to 100%
 
