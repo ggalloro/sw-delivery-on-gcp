@@ -2,7 +2,7 @@
 
 This repo contains some example assets to evaluate how to use Google [Cloud Code](https://cloud.google.com/code/docs/shell), [Cloud Build](https://cloud.google.com/build/docs/overview), [Cloud Deploy](https://cloud.google.com/deploy/docs/overview) and [Skaffold](https://skaffold.dev/) to automate software delivery and promote releases through multiple stages on GCP.
 
-Using these assets and following the instructions below you could experiment an example flow where:
+Using these assets and following the instructions in [this blog article](https://medium.com/google-cloud/end-to-end-continuous-delivery-on-google-cloud-using-native-services-d1ab957537b3) you can experiment an example flow where:
 1. A developer forks the application repo in his Github account
 2. The developer makes a change to the code using [Cloud Shell Editor and Cloud Code](https://cloud.google.com/code/docs/shell), the change is immediately deployed in his dev cluster running in minikube in the Cloud Shell
 3. When he is happy with the change he opens a pull request to the main repo
