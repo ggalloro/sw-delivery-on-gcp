@@ -25,16 +25,3 @@ spec:
           env:
             - name: TARGET
               value: prod
---- 
-kind: HTTPRoute
-apiVersion: gateway.networking.k8s.io/v1beta1
-metadata:
-  name: cdongcp-route
-spec:
-  parentRefs:
-  - kind: Gateway
-    name: cdongcp-gateway
-  rules:
-  - backendRefs:
-    - name: cdongcp-app
-      port: 80
