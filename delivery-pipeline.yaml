@@ -44,7 +44,7 @@ metadata:
 description: Prod Cluster (GCP)
 requireApproval: true
 gke:
-  cluster: projects/yourproject/locations/yourlocation/clusters/prodcluster
+  cluster: projects/kyr-sandbox-test-sma/locations/europe-west1/clusters/prod-environment-cluster
 ---
 apiVersion: deploy.cloud.google.com/v1
 kind: Target
@@ -52,4 +52,4 @@ metadata:
   name: qa
 description: QA Cluster (GCP)
 gke:
-  cluster: projects/yourproject/locations/yourlocation/clusters/qacluster
+  cluster: projects/kyr-sandbox-test-sma/locations/europe-west1/clusters/qa-environment-cluster

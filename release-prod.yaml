@@ -5,6 +5,6 @@ steps:
     [
        "deploy", "releases", "promote", "--delivery-pipeline",
        "cd-on-gcp-pipeline", "--release", "cdongcp-rel", 
-       "--region", "yourregion"
+       "--region", "europe-west1"
     ]
 
