@@ -13,7 +13,7 @@ steps:
   args:
     [
       "deploy", "releases", "create", "cdongcp-rel",
-      "--delivery-pipeline", "cd-on-gcp-pipeline",
+      "--delivery-pipeline", "cd-on-gcp-pipeline-version2",
       "--region", "europe-west1",
       "--annotations", "commitId=${REVISION_ID}",
       "--build-artifacts", "/workspace/artifacts.json"
