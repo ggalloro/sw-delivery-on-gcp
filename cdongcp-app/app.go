@@ -22,7 +22,7 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "cd-on-gcp app running in target: %s!!\n", os.Getenv("TARGET"))
+	fmt.Fprintf(w, "Sadki cd-on-gcp app running in target: %s!!\n", os.Getenv("TARGET"))
 }
 
 func main() {
