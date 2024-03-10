@@ -5,16 +5,16 @@ steps:
     - build
     - '--interactive=false'
     - '--file-output=/workspace/artifacts.json'
-    - '--default-repo=yourrepo'
+    - '--default-repo=europe-west1-docker.pkg.dev/kyr-sandbox-test-sma/repertoire-cicd'
     - '--push=true'
   id: skaffold-build
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   entrypoint: gcloud
   args:
     [
-      "deploy", "releases", "create", "cdongcp-rel",
+      "deploy", "releases", "create", "cdongcp-rel-demo",
       "--delivery-pipeline", "cd-on-gcp-pipeline",
-      "--region", "yourregion",
+      "--region", "europe-west1",
       "--annotations", "commitId=${REVISION_ID}",
       "--build-artifacts", "/workspace/artifacts.json"
     ]
